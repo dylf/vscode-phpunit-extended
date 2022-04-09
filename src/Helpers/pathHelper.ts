@@ -6,7 +6,7 @@ import SharedConfiguration from "./configuration";
 export default class PathHelper {
   /**
    * Finds the directory of `phpunit.xml` or `phpunit.xml.dist`.
-   * 
+   *
    * @param currentPath - The path to the test file.
    * @returns The path to the working directory.
    */
@@ -20,7 +20,7 @@ export default class PathHelper {
   /**
    * Searches up directories attempting to find
    * the path of the file given only the name.
-   * 
+   *
    * @param fileRelativeName - The name of the file.
    * @param currentPath - The path to search.
    * @returns The path where the file resides.
@@ -55,7 +55,7 @@ export default class PathHelper {
   /**
    * Remaps local paths that match the path mappings
    * to have the new path mapping.
-   * 
+   *
    * @param actualPath - The current path.
    * @returns The path according to the path mappings.
    */
@@ -64,7 +64,7 @@ export default class PathHelper {
 
     if (SharedConfiguration.docker_enable() || SharedConfiguration.ssh_enable()) {
       for (const [localPath, remotePath] of Object.entries(SharedConfiguration.path_mapping())) {
-        const expandedLocalPath = localPath.replace(/^~/, os.homedir());
+        const expandedLocalPath = localPath.replace(/\$\{workspaceFolder\}/gi, vscode.workspace.rootPath);
         if (actualPath.startsWith(expandedLocalPath)) {
           return actualPath.replace(expandedLocalPath, remotePath);
         }
@@ -78,7 +78,7 @@ export default class PathHelper {
    * Normalizes the path to have forward slashes
    * instead of back slashes. Escapes spaces if not
    * on a Windows system.
-   * 
+   *
    * @param path - The path to normalize.
    * @returns The path converted to a linux style path.
    */

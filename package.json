@@ -94,7 +94,7 @@
           "default": "",
           "description": "Path to phpunit executable (if empty it tries to use composer installation)."
         },
-        "phpunit.pathMappings": {
+        "phpunit.paths": {
           "type": "object",
           "default": {},
           "description": "The path mapping. Keys are local (host) paths and values are remote (guest) paths."
